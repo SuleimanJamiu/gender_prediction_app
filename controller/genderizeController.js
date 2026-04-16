@@ -14,7 +14,7 @@ const checkGender = async (req, res) => {
     const url = `https://api.genderize.io?name=${encodeURIComponent(name.trim())}`;
 
     try {
-        const response = await axios.get(url);
+        const response = await axios.get(url, { timeout: 5000 });
         const data = response.data;
         //console.log("Received data:", data);
         
@@ -38,7 +38,8 @@ const checkGender = async (req, res) => {
                 processed_at
             }
         };
-
+        console.log("Query received:", req.query);
+        
         return res.status(200).json(result);
     } catch (err) {
         if (err.response) {
